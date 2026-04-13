@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çocuk Yoğun Bakım – Çocuk Hastanesi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root{--primary:#0A6EBD;--primary-dark:#054F8A;--primary-light:#E8F4FF;--teal:#00B4A6;--text-dark:#0D1B2A;--text-mid:#3D5268;--text-light:#7A92A8;--white:#FFFFFF;--bg:#F5F9FD;--border:rgba(10,110,189,0.12);--shadow-sm:0 2px 12px rgba(10,110,189,0.08);--shadow-md:0 8px 32px rgba(10,110,189,0.14);--shadow-lg:0 20px 60px rgba(10,110,189,0.18);--radius:16px;--radius-sm:8px;--transition:all 0.35s cubic-bezier(0.4,0,0.2,1);}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text-dark);}
+        header{background:linear-gradient(135deg,#1A237E 0%,#1565C0 60%,#0A6EBD 100%);padding:80px 32px 60px;text-align:center;position:relative;overflow:hidden;}
+        header::before{content:'';position:absolute;top:-80px;right:-80px;width:350px;height:350px;border-radius:50%;background:rgba(255,255,255,0.05);}
+        .header-badge{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.9);font-size:0.72rem;font-weight:700;padding:5px 14px;border-radius:50px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;position:relative;z-index:2;}
+        header h1{font-family:'Playfair Display',serif;font-size:3rem;color:var(--white);position:relative;z-index:2;}
+        header p{color:rgba(255,255,255,0.8);font-size:1.05rem;margin-top:10px;position:relative;z-index:2;}
+        nav{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm);}
+        .nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;align-items:center;}
+        nav ul{list-style:none;display:flex;gap:2px;}
+        nav ul li{position:relative;}
+        nav a{display:block;color:var(--text-mid);text-decoration:none;padding:16px 14px;font-size:0.875rem;font-weight:500;transition:var(--transition);position:relative;white-space:nowrap;}
+        nav a::after{content:'';position:absolute;bottom:0;left:50%;right:50%;height:2.5px;background:var(--primary);border-radius:2px 2px 0 0;transition:var(--transition);}
+        nav a:hover{color:var(--primary);}
+        nav a:hover::after{left:14px;right:14px;}
+        nav ul li ul{display:none;position:absolute;top:calc(100% + 4px);left:0;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-md);width:220px;overflow:hidden;z-index:200;}
+        nav ul li:hover ul{display:block;}
+        nav ul li ul li{display:block;}
+        nav ul li ul a{padding:10px 16px;font-size:0.84rem;border-bottom:1px solid var(--border);}
+        nav ul li ul a:hover{background:var(--primary-light);color:var(--primary);}
+        nav ul li ul a:hover::after{display:none;}
+        nav ul li ul li:last-child a{border-bottom:none;}
+        .container{max-width:900px;margin:56px auto;padding:0 32px;}
+        /* Carousel */
+        .carousel{position:relative;border-radius:var(--radius);overflow:hidden;margin-bottom:36px;box-shadow:var(--shadow-md);}
+        .carousel-track{display:flex;transition:transform 0.5s ease;}
+        .carousel-slide{min-width:100%;height:320px;}
+        .carousel-slide img{width:100%;height:100%;object-fit:cover;}
+        .carousel-slide-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#E8F4FF,#BDDEFF);}
+        .carousel-slide-ph svg{width:80px;height:80px;opacity:0.35;color:var(--primary);}
+        .carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.9);border:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-sm);transition:var(--transition);}
+        .carousel-btn:hover{background:var(--white);box-shadow:var(--shadow-md);}
+        .carousel-btn svg{width:18px;height:18px;color:var(--primary);}
+        .carousel-prev{left:12px;}
+        .carousel-next{right:12px;}
+        .intro-text{font-size:1.1rem;color:var(--text-mid);line-height:1.8;margin-bottom:36px;text-align:center;}
+        .info-card{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);padding:32px;box-shadow:var(--shadow-sm);margin-bottom:20px;}
+        .info-card h3{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--text-dark);margin-bottom:14px;}
+        .info-card p{font-size:0.92rem;color:var(--text-mid);line-height:1.75;margin-bottom:10px;}
+        .contact-card{background:linear-gradient(135deg,var(--primary-dark),var(--primary));border-radius:var(--radius);padding:32px;text-align:center;color:var(--white);}
+        .contact-card h3{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:16px;}
+        .contact-items{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;}
+        .contact-item{display:flex;align-items:center;gap:8px;font-size:0.9rem;}
+        .contact-item svg{width:18px;height:18px;color:rgba(255,255,255,0.7);}
+        footer{background:var(--text-dark);color:rgba(255,255,255,0.6);text-align:center;padding:24px;font-size:0.82rem;margin-top:60px;}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-badge">🏥 İleri Bakım</div>
+        <h1>Çocuk Yoğun Bakım Servisi</h1>
+        <p>Kritik durumlarda en yüksek standartta tıbbi bakım</p>
+    </header>
+    <nav>
+        <div class="nav-inner">
+            <ul>
+                <li><a href="../index.html">Ana Sayfa</a></li>
+                <li><a href="#">Bölümlerimiz ▾</a>
+                    <ul>
+                        <li><a href="emergency.html" target="_blank">🚨 Çocuk Acil Servisi</a></li>
+                        <li><a href="icu.html">🏥 Çocuk Yoğun Bakım</a></li>
+                        <li><a href="oncology.html" target="_blank">🔬 Çocuk Onkoloji</a></li>
+                    </ul>
+                </li>
+                <li><a href="doctors.html" target="_blank">Doktorlarımız</a></li>
+                <li><a href="nurses.html" target="_blank">Hemşirelerimiz</a></li>
+                <li><a href="news.html" target="_blank">Duyurular</a></li>
+                <li><a href="achievements.html" target="_blank">Başarılarımız</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="carousel" id="carousel">
+            <div class="carousel-track" id="track">
+                <div class="carousel-slide"><img src="icu1.jpg" alt="YBÜ 1" onerror="this.outerHTML='<div class=\'carousel-slide-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.2\'><rect x=\'2\' y=\'3\' width=\'20\' height=\'14\' rx=\'2\'/><path d=\'M8 21h8M12 17v4\'/></svg></div>'"></div>
+                <div class="carousel-slide"><img src="icu2.jpg" alt="YBÜ 2" onerror="this.outerHTML='<div class=\'carousel-slide-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.2\'><path d=\'M22 12h-4l-3 9L9 3l-3 9H2\'/></svg></div>'"></div>
+                <div class="carousel-slide"><img src="icu3.jpg" alt="YBÜ 3" onerror="this.outerHTML='<div class=\'carousel-slide-ph\'><svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.2\'><circle cx=\'12\' cy=\'12\' r=\'10\'/><polyline points=\'12,6 12,12 16,14\'/></svg></div>'"></div>
+            </div>
+            <button class="carousel-btn carousel-prev" onclick="slide(-1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg></button>
+            <button class="carousel-btn carousel-next" onclick="slide(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg></button>
+        </div>
+        <div class="info-card">
+            <h3>Hizmetlerimiz</h3>
+            <p>Çocuk yoğun bakım servisi, kritik durumlarda çocukların en iyi şekilde tedavi edilmesi için son teknoloji ekipmanlarla donatılmıştır.</p>
+            <p>Uzman doktorlarımız ve hemşirelerimiz, her an çocuklarınızın yanında ve onların sağlığı için kesintisiz çalışmaktadır.</p>
+        </div>
+        <div class="contact-card">
+            <h3>İletişim Bilgileri</h3>
+            <div class="contact-items">
+                <div class="contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 015.11 12.1 19.79 19.79 0 012 3.5 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                    123-456-7890
+                </div>
+                <div class="contact-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    info@cocukacilservisi.com
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>© 2024 Çocuk Hastanesi. Tüm hakları saklıdır.</footer>
+    <script>
+        let cur=0;const slides=document.querySelectorAll('.carousel-slide');
+        function slide(dir){cur=(cur+dir+slides.length)%slides.length;document.getElementById('track').style.transform=`translateX(-${cur*100}%)`;}
+        setInterval(()=>slide(1),4000);
+    </script>
+</body>
+</html>

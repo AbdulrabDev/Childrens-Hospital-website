@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çocuk Hastanesi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A6EBD;
+            --primary-dark: #054F8A;
+            --primary-light: #E8F4FF;
+            --accent: #FF6B35;
+            --accent-soft: #FFF0EB;
+            --teal: #00B4A6;
+            --teal-light: #E0F7F6;
+            --text-dark: #0D1B2A;
+            --text-mid: #3D5268;
+            --text-light: #7A92A8;
+            --white: #FFFFFF;
+            --bg: #F5F9FD;
+            --card-bg: #FFFFFF;
+            --border: rgba(10,110,189,0.12);
+            --shadow-sm: 0 2px 12px rgba(10,110,189,0.08);
+            --shadow-md: 0 8px 32px rgba(10,110,189,0.14);
+            --shadow-lg: 0 20px 60px rgba(10,110,189,0.18);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ─────────────────────────── */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--teal) 100%);
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 320px; height: 320px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+        }
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: 30%;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: rgba(0,180,166,0.18);
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 22px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .header-logo {
+            width: 52px;
+            height: 52px;
+            background: rgba(255,255,255,0.18);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255,255,255,0.25);
+            overflow: hidden;
+        }
+        .header-logo img {
+            width: 38px;
+            height: auto;
+            object-fit: contain;
+        }
+        .header-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+        .header-title span {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.7);
+            font-weight: 400;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+        .login-btn {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+            border: 1.5px solid rgba(255,255,255,0.35);
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .login-btn:hover {
+            background: var(--white);
+            color: var(--primary);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .login-btn svg { width: 16px; height: 16px; }
+
+        /* ── NAV ─────────────────────────────── */
+        nav {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        nav ul { list-style: none; display: flex; align-items: center; gap: 2px; }
+        nav ul li { position: relative; }
+        nav a {
+            display: block;
+            color: var(--text-mid);
+            text-decoration: none;
+            padding: 16px 14px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            white-space: nowrap;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%; right: 50%;
+            height: 2.5px;
+            background: var(--primary);
+            border-radius: 2px 2px 0 0;
+            transition: var(--transition);
+        }
+        nav a:hover { color: var(--primary); }
+        nav a:hover::after { left: 14px; right: 14px; }
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-md);
+            width: 220px;
+            overflow: hidden;
+            z-index: 200;
+        }
+        nav ul li:hover ul { display: block; }
+        nav ul li ul li { display: block; }
+        nav ul li ul a {
+            padding: 10px 16px;
+            font-size: 0.84rem;
+            border-bottom: 1px solid var(--border);
+        }
+        nav ul li ul a:hover { background: var(--primary-light); color: var(--primary); }
+        nav ul li ul a:hover::after { display: none; }
+        nav ul li ul li:last-child a { border-bottom: none; }
+
+        /* ── MODAL ───────────────────────────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(5,25,50,0.55);
+            backdrop-filter: blur(6px);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 36px;
+            width: 380px;
+            max-width: 92vw;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            animation: modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.88) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 18px;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: var(--text-light);
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .modal-close:hover { background: var(--bg); color: var(--text-dark); }
+        .modal-icon {
+            width: 64px; height: 64px;
+            background: var(--primary-light);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .modal-icon svg { width: 30px; height: 30px; color: var(--primary); }
+        .modal-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            text-align: center;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+        .modal-box p.subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 24px;
+        }
+        .form-group { margin-bottom: 14px; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-mid);
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            background: var(--bg);
+            transition: var(--transition);
+            outline: none;
+        }
+        .form-group input:focus {
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(10,110,189,0.1);
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 6px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(10,110,189,0.3);
+        }
+        #error-message {
+            color: #E53935;
+            font-size: 0.82rem;
+            text-align: center;
+            margin-top: 10px;
+            min-height: 18px;
+        }
+
+        /* ── SLIDER ──────────────────────────── */
+        .slider-section {
+            position: relative;
+            height: 480px;
+            overflow: hidden;
+        }
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+        .slide.active { opacity: 1; }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .slide-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(5,79,138,0.78) 0%, rgba(5,79,138,0.3) 60%, transparent 100%);
+        }
+        .slide-content {
+            position: absolute;
+            bottom: 60px;
+            left: 0;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 48px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .slide-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 50px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .slide-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            color: var(--white);
+            line-height: 1.25;
+            max-width: 520px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+        }
+        .slider-dots {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .dot.active { background: var(--white); width: 24px; border-radius: 4px; }
+
+        /* ── QUICK STATS ─────────────────────── */
+        .stats-bar {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 0;
+        }
+        .stats-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .stat-item {
+            padding: 24px 20px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-item:hover { background: var(--primary-light); }
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* ── MAIN GRID ───────────────────────── */
+        .main-section {
+            max-width: 1200px;
+            margin: 56px auto;
+            padding: 0 32px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--teal);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        .card-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .card:hover .card-image img { transform: scale(1.06); }
+        .card-image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-image-placeholder svg { width: 60px; height: 60px; opacity: 0.4; }
+        .card-body { padding: 24px; flex: 1; }
+        .card-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .tag-blue { background: var(--primary-light); color: var(--primary); }
+        .tag-teal { background: var(--teal-light); color: var(--teal); }
+        .tag-orange { background: var(--accent-soft); color: var(--accent); }
+        .card-body h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .card-body p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            line-height: 1.65;
+        }
+        .card-arrow {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        .card:hover .card-arrow { gap: 10px; }
+        .card-arrow svg { width: 16px; height: 16px; }
+
+        /* Doctor card bg colors */
+        .card-doctors .card-image-placeholder { background: linear-gradient(135deg, #E8F4FF, #BDDEFF); }
+        .card-nurses .card-image-placeholder { background: linear-gradient(135deg, #E0F7F6, #A0E8E4); }
+        .card-achievements .card-image-placeholder { background: linear-gradient(135deg, #FFF0EB, #FFD4C2); }
+        .card-news .card-image-placeholder { background: linear-gradient(135deg, #F0F4FF, #CDD9FF); }
+
+        /* ── DEPARTMENTS ─────────────────────── */
+        .departments-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .departments-section::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+        }
+        .dept-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .dept-header { text-align: center; margin-bottom: 36px; }
+        .dept-header .section-label { color: rgba(255,255,255,0.6); }
+        .dept-header .section-title { color: var(--white); }
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .dept-card {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .dept-card:hover {
+            background: rgba(255,255,255,0.18);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+        }
+        .dept-icon {
+            width: 60px; height: 60px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .dept-icon svg { width: 28px; height: 28px; color: white; }
+        .dept-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .dept-card p {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.6;
+        }
+
+        /* ── FOOTER ──────────────────────────── */
+        footer {
+            background: var(--text-dark);
+            color: rgba(255,255,255,0.75);
+            padding: 48px 0 24px;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 24px;
+        }
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--white);
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+        .footer-brand p { font-size: 0.85rem; line-height: 1.7; }
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 8px; }
+        .footer-col ul li a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.84rem;
+            transition: color 0.2s;
+        }
+        .footer-col ul li a:hover { color: var(--white); }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.84rem;
+            margin-bottom: 10px;
+        }
+        .contact-item svg { width: 15px; height: 15px; color: var(--teal); flex-shrink: 0; }
+        .map-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+        .map-link:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ── ANIMATIONS ──────────────────────── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeUp 0.6s ease forwards; }
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+        /* ── RESPONSIVE ──────────────────────── */
+        @media (max-width: 768px) {
+            .header-inner { padding: 16px 20px; }
+            .header-title h1 { font-size: 1.2rem; }
+            .slide-content { padding: 0 20px; }
+            .slide-content h2 { font-size: 1.6rem; }
+            .stats-inner { grid-template-columns: repeat(2, 1fr); }
+            .cards-grid { grid-template-columns: 1fr; }
+            .dept-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+            .main-section { padding: 0 16px; margin: 36px auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-inner">
+            <div class="header-brand">
+                <div class="header-logo">
+                    <img src="logo.png" alt="Logo" onerror="this.style.display='none';this.parentElement.innerHTML='<svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'white\' stroke-width=\'2\'><path d=\'M12 2l3 6h6l-5 4 2 6-6-3-6 3 2-6-5-4h6z\'/></svg>'">
+                </div>
+                <div class="header-title">
+                    <h1>Çocuk Hastanesi</h1>
+                    <span>Sağlık &amp; Bakım Merkezi</span>
+                </div>
+            </div>
+            <button class="login-btn" onclick="openModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Giriş Yap
+            </button>
+        </div>
+    </header>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <h2>Hoş Geldiniz</h2>
+            <p class="subtitle">Devam etmek için giriş yapın</p>
+            <div class="form-group">
+                <label>Kullanıcı Adı</label>
+                <input type="text" id="username" placeholder="Kullanıcı adınızı girin">
+            </div>
+            <div class="form-group">
+                <label>Şifre</label>
+                <input type="password" id="password" placeholder="••••••••" onkeydown="if(event.key==='Enter') login()">
+            </div>
+            <button class="btn-primary" onclick="login()">Giriş Yap</button>
+            <p id="error-message"></p>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <ul>
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li>
+                    <a href="#">Bölümlerimiz ▾</a>
+                    <ul>
+                        <li><a href="sections/emergency.html" target="_blank">🚨 Çocuk Acil Servisi</a></li>
+                        <li><a href="sections/icu.html" target="_blank">🏥 Çocuk Yoğun Bakım</a></li>
+                        <li><a href="sections/oncology.html" target="_blank">🔬 Çocuk Onkoloji</a></li>
+                    </ul>
+                </li>
+                <li><a href="sections/doctors.html" target="_blank">Doktorlarımız</a></li>
+                <li><a href="sections/nurses.html" target="_blank">Hemşirelerimiz</a></li>
+                <li><a href="sections/news.html" target="_blank">Duyurular</a></li>
+                <li><a href="sections/achievements.html" target="_blank">Başarılarımız</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- SLIDER -->
+    <div class="slider-section">
+        <div class="slide active">
+            <img src="hospital1.jpg" alt="Hastane" onerror="this.style.background='linear-gradient(135deg,#054F8A,#0A6EBD)';this.style.display='block'">
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <span class="slide-badge">7/24 Hizmet</span>
+                <h2>Çocukların Sağlığı İçin En İyi Hizmet</h2>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="hospital2.jpg" alt="Hastane Tesisleri" onerror="this.style.background='linear-gradient(135deg,#054F8A,#00B4A6)';this.style.display='block'">
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <span class="slide-badge">Uzman Ekip</span>
+                <h2>Nitelikli Personelimizle Yanınızdayız</h2>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="hospital3.jpg" alt="Hastane Görüntüsü" onerror="this.style.background='linear-gradient(135deg,#0A6EBD,#FF6B35)';this.style.display='block'">
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <span class="slide-badge">Modern Teknoloji</span>
+                <h2>En İyi Tıbbi Tesisler Çocuklarımız İçin</h2>
+            </div>
+        </div>
+        <div class="slider-dots" id="sliderDots"></div>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stats-inner">
+            <div class="stat-item fade-up delay-1">
+                <div class="stat-num">500+</div>
+                <div class="stat-label">Uzman Doktor</div>
+            </div>
+            <div class="stat-item fade-up delay-2">
+                <div class="stat-num">20K+</div>
+                <div class="stat-label">Tedavi Edilen Hasta</div>
+            </div>
+            <div class="stat-item fade-up delay-3">
+                <div class="stat-num">24/7</div>
+                <div class="stat-label">Kesintisiz Hizmet</div>
+            </div>
+            <div class="stat-item fade-up delay-4">
+                <div class="stat-num">15+</div>
+                <div class="stat-label">Ödül &amp; Başarı</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEPARTMENTS -->
+    <div class="departments-section">
+        <div class="dept-inner">
+            <div class="dept-header">
+                <div class="section-label">Uzmanlık Alanlarımız</div>
+                <h2 class="section-title">Bölümlerimiz</h2>
+            </div>
+            <div class="dept-grid">
+                <a class="dept-card" href="sections/emergency.html" target="_blank">
+                    <div class="dept-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </div>
+                    <h3>Çocuk Acil Servisi</h3>
+                    <p>7/24 acil tıbbi müdahale ve ilk yardım hizmetleri</p>
+                </a>
+                <a class="dept-card" href="sections/icu.html" target="_blank">
+                    <div class="dept-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                    </div>
+                    <h3>Çocuk Yoğun Bakım</h3>
+                    <p>Kritik vakalarda ileri düzey yoğun bakım hizmetleri</p>
+                </a>
+                <a class="dept-card" href="sections/oncology.html" target="_blank">
+                    <div class="dept-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                    </div>
+                    <h3>Çocuk Onkoloji</h3>
+                    <p>Kan hastalıkları ve onkoloji alanında uzman tedavi</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CARDS -->
+    <div class="main-section">
+        <div class="section-header">
+            <div class="section-label">Hastanemizi Keşfedin</div>
+            <h2 class="section-title">Size En İyi Hizmeti Sunuyoruz</h2>
+        </div>
+        <div class="cards-grid">
+            <div class="card card-doctors" onclick="window.location.href='sections/doctors.html'">
+                <div class="card-image">
+                    <img src="doctors.jpg" alt="Doktorlarımız" onerror="this.style.display='none';this.parentElement.classList.add('card-image-placeholder');this.parentElement.innerHTML='<svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'#0A6EBD\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg>'">
+                </div>
+                <div class="card-body">
+                    <span class="card-tag tag-blue">Uzman Kadro</span>
+                    <h3>Doktorlarımız</h3>
+                    <p>Alanında uzman doktorlarımız, çocuk sağlığı konusunda en yüksek kalitede hizmet sunmaktadır.</p>
+                    <div class="card-arrow">
+                        Daha Fazla Bilgi
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-nurses" onclick="window.location.href='sections/nurses.html'">
+                <div class="card-image">
+                    <img src="nurses.jpg" alt="Hemşirelerimiz" onerror="this.style.display='none';this.parentElement.classList.add('card-image-placeholder');this.parentElement.innerHTML='<svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'#00B4A6\' stroke-width=\'1.5\'><path d=\'M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2\'/><circle cx=\'12\' cy=\'7\' r=\'4\'/></svg>'">
+                </div>
+                <div class="card-body">
+                    <span class="card-tag tag-teal">Bakım Ekibi</span>
+                    <h3>Hemşirelerimiz</h3>
+                    <p>Deneyimli hemşirelerimiz, çocukların bakımında büyük özveri ve profesyonellik ile hizmet vermektedir.</p>
+                    <div class="card-arrow">
+                        Daha Fazla Bilgi
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-achievements" onclick="window.location.href='sections/achievements.html'">
+                <div class="card-image">
+                    <img src="achievements.jpg" alt="Başarılarımız" onerror="this.style.display='none';this.parentElement.classList.add('card-image-placeholder');this.parentElement.innerHTML='<svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'#FF6B35\' stroke-width=\'1.5\'><circle cx=\'12\' cy=\'8\' r=\'6\'/><path d=\'M9 21l3-5 3 5\'/></svg>'">
+                </div>
+                <div class="card-body">
+                    <span class="card-tag tag-orange">Ödüller</span>
+                    <h3>Başarılarımız</h3>
+                    <p>Hastanemiz, ulusal ve uluslararası arenada birçok prestijli ödül kazanmıştır.</p>
+                    <div class="card-arrow">
+                        Daha Fazla Bilgi
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-news" onclick="window.location.href='sections/news.html'">
+                <div class="card-image">
+                    <img src="announcements.jpg" alt="Duyurular" onerror="this.style.display='none';this.parentElement.classList.add('card-image-placeholder');this.parentElement.innerHTML='<svg viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'#0A6EBD\' stroke-width=\'1.5\'><path d=\'M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9\'/><path d=\'M13.73 21a2 2 0 01-3.46 0\'/></svg>'">
+                </div>
+                <div class="card-body">
+                    <span class="card-tag tag-blue">Güncel</span>
+                    <h3>Duyurular</h3>
+                    <p>Son gelişmeler, etkinlikler ve hastanemize ait önemli duyurular hakkında bilgi alın.</p>
+                    <div class="card-arrow">
+                        Daha Fazla Bilgi
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>Çocuk Hastanesi</h3>
+                    <p>Çocuklarınızın sağlığı ve mutluluğu için en iyi tıbbi hizmetleri sunmayı misyon edinmiş, alanında öncü bir sağlık kuruluşuyuz.</p>
+                    <a href="https://maps.app.goo.gl/QTTkSeTYJaKNB1LR8" target="_blank" class="map-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Haritada Gör
+                    </a>
+                </div>
+                <div class="footer-col">
+                    <h4>Hızlı Bağlantılar</h4>
+                    <ul>
+                        <li><a href="sections/doctors.html" target="_blank">Doktorlarımız</a></li>
+                        <li><a href="sections/nurses.html" target="_blank">Hemşirelerimiz</a></li>
+                        <li><a href="sections/achievements.html" target="_blank">Başarılarımız</a></li>
+                        <li><a href="sections/news.html" target="_blank">Duyurular</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+                        05344771279
+                    </div>
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        hospital88@gmail.com
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2024 Çocuk Hastanesi. Tüm hakları saklıdır.</span>
+                <span>Sağlık &amp; Bakım Merkezi</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Slider
+        const slides = document.querySelectorAll('.slide');
+        const dotsContainer = document.getElementById('sliderDots');
+        let current = 0;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goTo(i);
+            dotsContainer.appendChild(dot);
+        });
+
+        function goTo(idx) {
+            slides[current].classList.remove('active');
+            dotsContainer.children[current].classList.remove('active');
+            current = idx;
+            slides[current].classList.add('active');
+            dotsContainer.children[current].classList.add('active');
+        }
+
+        setInterval(() => goTo((current + 1) % slides.length), 6000);
+
+        // Login
+        function login() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            const err = document.getElementById('error-message');
+
+            const users = [
+                { u: 'doctor1', p: '123', r: 'doctor_dashboard.html' },
+                { u: 'doctor2', p: '123', r: 'doctor_dashboard.html' },
+                { u: 'doctor3', p: '123', r: 'doctor_dashboard.html' },
+                { u: 'nurse1', p: '123', r: 'nurse_dashboard.html' },
+                { u: 'nurse2', p: '123', r: 'nurse_dashboard.html' },
+                { u: 'nurse3', p: '123', r: 'nurse_dashboard.html' },
+            ];
+
+            const match = users.find(x => x.u === u && x.p === p);
+            if (match) { window.location.href = match.r; return; }
+            err.textContent = 'Kullanıcı adı veya şifre hatalı.';
+        }
+
+        function openModal() { document.getElementById('loginModal').classList.add('active'); }
+        function closeModal() { document.getElementById('loginModal').classList.remove('active'); }
+        document.getElementById('loginModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+    </script>
+</body>
+</html>
